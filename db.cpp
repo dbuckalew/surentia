@@ -2520,35 +2520,41 @@ void reset_room( ROOM_INDEX_DATA *pRoom, bool unconditional )
 						}
 					}
 				}
-				
-				
-				pMob = create_mobile( pMobIndex, 0 );					
-				
-				// Some more hard coding.
-				
-				// Infrared for mobs starting in dark rooms
-				if ( room_is_dark( pRoom ) ){
-					SET_BIT(pMob->affected_by, AFF_INFRARED);
-				}
-				
-				// Pet shop mobiles get ACT_PET set.
-				{
-					ROOM_INDEX_DATA *pRoomIndexPrev;
-					
-					pRoomIndexPrev = get_room_index( pRoom->vnum - 1 );
-					if ( pRoomIndexPrev
-						&& IS_SET( pRoomIndexPrev->room_flags, ROOM_PET_SHOP ) )
-						SET_BIT( pMob->act, ACT_PET);
-				}
-				
-				char_to_room( pMob, pRoom );
-				
-				LastMob = pMob;
-				level  = URANGE( 0, pMob->level - 2, LEVEL_HERO - 1 );
-				last = true;
-				if ( HAS_TRIGGER( pMob, TRIG_REPOP )){
-					mp_percent_trigger( pMob, NULL, NULL, NULL, TRIG_REPOP );
-				}
+			
+        limit = 0;
+			  if(count < pReset->arg4 && pMobIndex->count < pReset->arg2) {
+          limit = UMIN(pReset->arg4 - count, pReset->arg2 - pMobIndex->count);
+        }
+
+        for( ; limit > 0; limit-- ) {
+          pMob = create_mobile( pMobIndex, 0 );					
+
+          // Some more hard coding.
+
+          // Infrared for mobs starting in dark rooms
+          if ( room_is_dark( pRoom ) ){
+            SET_BIT(pMob->affected_by, AFF_INFRARED);
+          }
+
+          // Pet shop mobiles get ACT_PET set.
+          {
+            ROOM_INDEX_DATA *pRoomIndexPrev;
+
+            pRoomIndexPrev = get_room_index( pRoom->vnum - 1 );
+            if ( pRoomIndexPrev
+                && IS_SET( pRoomIndexPrev->room_flags, ROOM_PET_SHOP ) )
+              SET_BIT( pMob->act, ACT_PET);
+          }
+
+          char_to_room( pMob, pRoom );
+
+          LastMob = pMob;
+          level  = URANGE( 0, pMob->level - 2, LEVEL_HERO - 1 );
+          last = true;
+          if ( HAS_TRIGGER( pMob, TRIG_REPOP )){
+            mp_percent_trigger( pMob, NULL, NULL, NULL, TRIG_REPOP );
+          }
+        }
 			}
 			break;
 			
