@@ -2584,11 +2584,14 @@ void do_mlist( char_data *ch, char *argument )
     MOB_INDEX_DATA	*pMobIndex;
     AREA_DATA		*pArea;
     char			buf[MSL];
+    char      buf2[MSL];
     BUFFER			*buf1;
+    BUFFER      *buf3;
     char			arg[MIL];
     bool			fAll, found, cTest;
     int				vnum, stars;
     int				col = 0;
+    int       count = 0;
 	char			vnum_text[MIL];
 
 	if (!HAS_SECURITY(ch,1))
@@ -2677,6 +2680,7 @@ void do_mlist( char_data *ch, char *argument )
 				}
 			}	
 			add_buf( buf1, buf );
+      count++;
 		}
     }
 
@@ -2700,8 +2704,21 @@ void do_mlist( char_data *ch, char *argument )
     if ( col % 2 != 0 )
 		add_buf( buf1, "\r\n" );
 
-    ch->sendpage(buf_string(buf1));
+    //ch->sendpage(buf_string(buf1));
+    //free_buf(buf1);
+    
+    buf3 = new_buf();
+    
+    sprintf(buf, "MLIST: %d mobile%s found", count, (count==1?"":"s"));
+    sprintf(buf2,"`S%s`x", makef_titlebar(buf));
+    add_buf( buf3, buf2 );
+    add_buf( buf3, buf_string( buf1 ) );
+
+    ch->sendpage( buf_string( buf3 ) );
+
     free_buf(buf1);
+    free_buf(buf3);
+    
     return;
 }
 /**************************************************************************/
@@ -2908,11 +2925,14 @@ void do_olist( char_data *ch, char *argument )
     OBJ_INDEX_DATA	*pObjIndex;
     AREA_DATA		*pArea;
     char			buf[MSL];
+    char			buf2[MSL];
     BUFFER			*buf1;
+    BUFFER      *buf3;
     char			arg[MIL];
     bool			fAll, found, cTest;
     int				vnum, stars;
     int				col = 0;
+    int       count = 0;
 	char			vnum_text[MIL];
 
 	if (!HAS_SECURITY(ch,1))
@@ -3003,6 +3023,7 @@ void do_olist( char_data *ch, char *argument )
 					str_width(capitalize(pObjIndex->short_descr),29) );
 			}
 			add_buf( buf1, buf );
+      count++;
 			if ( ++col % 2 == 0 || cTest){
 				add_buf( buf1, "\r\n" );
 			}
@@ -3042,9 +3063,23 @@ void do_olist( char_data *ch, char *argument )
 
 	if (cTest)
 		ch->println("COLOUR TEST: The * on the right side should be the same colour as the vnums.");
-    ch->sendpage(buf_string(buf1));
+    //ch->sendpage( buf_string( buf1 ) );
+  /*
+	sprintf(buf, "OLIST: %d object%s found", count, (count==1?"":"s"));
+	sprintf(buf2,"`S%s`x", makef_titlebar(buf));
+  */
+
+    buf3 = new_buf();
+    
+    sprintf(buf, "OLIST: %d object%s found", count, (count==1?"":"s"));
+    sprintf(buf2,"`S%s`x", makef_titlebar(buf));
+    add_buf( buf3, buf2 );
+    add_buf( buf3, buf_string( buf1 ) );
+
+    ch->sendpage( buf_string( buf3 ) );
 
     free_buf(buf1);
+    free_buf(buf3);
     return;
 }
 /**************************************************************************/
