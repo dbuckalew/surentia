@@ -362,10 +362,10 @@ void saymote( language_data *language, char_data *ch, char *argument, int sayfla
 	}else{
 		wizitext[0]='\0';
 	}
-   bool blind=false, deaf=false, ic=false;
+   bool blind=false, deaf=false, ic=true;
    //  Code added by Kelemvor to do ic and ooc says
-   if(IS_SET(sayflags, SAYFLAG_IC))
-      ic=true;   //   Assume all says are ooc unles this flag was set. 
+   if(!IS_SET(sayflags, SAYFLAG_IC))
+      ic=false;   //   Assume all says are ooc unles this flag was set. 
     for( char_data *to= ch->in_room->people; to ; to = to->next_in_room )
     {
 		if(IS_SET(sayflags, SAYFLAG_ONLY_REMEMBERED_CHAR) && to!=ch->mprog_target){

@@ -273,6 +273,7 @@ DECLARE_DO_FUN( do_ooc				);
 DECLARE_DO_FUN(	do_open				);
 DECLARE_DO_FUN(	do_order			);
 DECLARE_DO_FUN(   do_isay            );  // Added by Kelemvor April 04
+DECLARE_DO_FUN(   do_osay            );  // Added by Kelemvor April 04
 DECLARE_DO_FUN(	do_oset				);
 DECLARE_DO_FUN(	do_ostat			);
 DECLARE_DO_FUN( do_outcast			);

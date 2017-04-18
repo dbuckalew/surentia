@@ -377,6 +377,7 @@ struct	cmd_type	cmd_table	[] =
 	{ "open",			do_open,			POS_RESTING,	0,	LOG_NORMAL, 	1 },
 	{ "order",			do_order,			POS_RESTING,	0,	LOG_PALWAYS,	1 },
    { "isay",            do_isay,         POS_RESTING,  0,  LOG_NORMAL,      0},  // Placed after inventor so the abreviation "i" will do inventory
+   { "osay",            do_osay,         POS_RESTING,  0,  LOG_NORMAL,      0},  // Placed after inventor so the abreviation "i" will do inventory
    { "^",            do_isay,         POS_RESTING,  0,  LOG_NORMAL,      0},
 	{ "outcast",		do_outcast, 		POS_DEAD,		0,	LOG_ALWAYS, 	1 },
 	{ "outfit", 		do_outfit,			POS_RESTING,	0,	LOG_NORMAL, 	1 },

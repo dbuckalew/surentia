@@ -461,7 +461,7 @@ void do_sayto( char_data *ch, char *argument )
 void do_say( char_data *ch, char *argument )
 {
 	int sayflags=0;
-if(HAS_CONFIG2(ch, CONFIG2_ALL_SAY_IC))
+  //if(HAS_CONFIG2(ch, CONFIG2_ALL_SAY_IC))
       SET_BIT(sayflags, SAYFLAG_IC);
 	if(HAS_CONFIG2(ch,CONFIG2_NOAUTOSAYMOTE)){
 		SET_BIT(sayflags, SAYFLAG_NO_SAYMOTE);
@@ -484,6 +484,22 @@ void do_isay( char_data *ch, char *argument )
    }
 
    SET_BIT(sayflags, SAYFLAG_IC);
+
+   saymote( ch->language, ch, argument, sayflags);   
+}
+/**************************************************************************/
+/**************************************************************************/
+void do_osay( char_data *ch, char *argument )
+{
+   int sayflags=0;
+   if(HAS_CONFIG2(ch,CONFIG2_NOAUTOSAYMOTE)){
+      SET_BIT(sayflags, SAYFLAG_NO_SAYMOTE);
+   }
+   if(HAS_CONFIG2(ch,CONFIG2_AUTOSAYCOLOURCODES)){
+      SET_BIT(sayflags, SAYFLAG_CONVERT_COLOUR);
+   }
+
+   REMOVE_BIT(sayflags, SAYFLAG_IC);
 
    saymote( ch->language, ch, argument, sayflags);   
 }
